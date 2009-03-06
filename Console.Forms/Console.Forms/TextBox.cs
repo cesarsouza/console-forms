@@ -73,14 +73,25 @@ namespace Crsouza.Console.Forms
             Invalidate();
         }
 
+        protected override void OnCaretPositionChanged(EventArgs e)
+        {
+            base.OnCaretPositionChanged(e);
+
+            Point p = getCursorPosition();
+            SetCursorPosition(p);
+        }
+
         protected override void OnPaint(ConsolePaintEventArgs e)
         {
             base.OnPaint(e);
 
+            string line;
             for (int i = 0; i < LineCount; i++)
             {
-                e.Graphics.DrawText(m_textLines[m_firstVisibleLineIndex + i - 1].ToString(),
-                    new Point(0, i), ForeColor, BackColor);
+                line = m_textLines[m_firstVisibleLineIndex + i].ToString();
+                e.Graphics.DrawText(line, new Point(0, i), ForeColor, BackColor);
+                if (line.Length < Width)
+                    e.Graphics.DrawLine(' ', new Point(line.Length, i), new Point(Width, i), ForeColor, BackColor);
             }
 
         }

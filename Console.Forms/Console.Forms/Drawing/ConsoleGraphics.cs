@@ -29,6 +29,9 @@ namespace Crsouza.Console.Forms
 
         public void DrawRectangle(Rectangle rectangle, char ch, ConsoleColor foreground, ConsoleColor background)
         {
+            bool cursorvisibility = System.Console.CursorVisible;
+            System.Console.CursorVisible = false;
+
             System.Console.CursorVisible = false;
             System.Console.ForegroundColor = foreground;
             System.Console.BackgroundColor = background;
@@ -38,15 +41,17 @@ namespace Crsouza.Console.Forms
             {
                 System.Console.SetCursorPosition(m_area.Left, m_area.Top+i);
                 System.Console.Write(line);
-                System.Console.WindowTop = 0;
+       //         System.Console.WindowTop = 0;
             }
          //   System.Console.WindowTop = 0;
-            System.Console.CursorVisible = true;
+            System.Console.CursorVisible = cursorvisibility;
         }
 
         public void DrawText(string text, Point location, ConsoleColor foreground, ConsoleColor background)
         {
+            bool cursorvisibility = System.Console.CursorVisible;
             System.Console.CursorVisible = false;
+
             List<String> lines = new List<string>();
 
             int lineSize = m_area.Width;
@@ -67,7 +72,23 @@ namespace Crsouza.Console.Forms
                 System.Console.WriteLine(lines[i]);
             }
 
-            System.Console.CursorVisible = true;   
+            System.Console.CursorVisible = cursorvisibility;
+        }
+
+        public void DrawLine(char ch, Point p1, Point p2, ConsoleColor foreground, ConsoleColor background)
+        {
+            bool cursorvisibility = System.Console.CursorVisible;
+            System.Console.CursorVisible = false;
+
+            System.Console.ForegroundColor = foreground;
+            System.Console.BackgroundColor = background;
+
+            //TODO: support vertical or diagonal lines
+            string line = new string(ch, p2.X - p1.X);
+            System.Console.SetCursorPosition(p1.X + m_area.Left, p1.Y + m_area.Top);
+            System.Console.Write(line);
+
+            System.Console.CursorVisible = cursorvisibility;
         }
 
     }

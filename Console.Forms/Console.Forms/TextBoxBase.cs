@@ -34,9 +34,9 @@ namespace Crsouza.Console.Forms
         public TextBoxBase()
         {
             m_textLines = new List<StringBuilder>();
-            m_firstVisibleLineIndex = 1;
+            m_firstVisibleLineIndex = 0;
             m_currentLinePosition = 0;
-            m_currentLineIndex = 1;
+            m_currentLineIndex = 0;
         }
 
 
@@ -64,13 +64,32 @@ namespace Crsouza.Console.Forms
             }
         }
 
-        public Point CarretPosition
+        public Point CaretPosition
         {
             get { return new Point(m_currentLineIndex, m_currentLinePosition); }
-            set
+            set { setCaretPosition(value.Y, value.X); }
+        }
+
+        private void setCaretPosition(int line, int col)
+        {
+            if (line != m_currentLineIndex || col != m_currentLinePosition)
             {
-                m_currentLineIndex = value.X;
-                m_currentLinePosition = value.Y;
+                bool changed = false;
+                if (line >= 0 && line < LineCount)
+                {
+                    m_currentLineIndex = line;
+                    changed = true;
+                }
+
+                if (col >= 0 && col < getCurrentLine().Length)
+                {
+                    m_currentLinePosition = col;
+                    changed = true;
+                }
+                if (changed)
+                {
+                    OnCaretPositionChanged(EventArgs.Empty);
+                }
             }
         }
 
@@ -79,13 +98,17 @@ namespace Crsouza.Console.Forms
             get { return m_textLines.Count; }
         }
 
+        protected virtual void OnCaretPositionChanged(EventArgs e)
+        {
+
+        }
 
         protected Point getCursorPosition()
         {
-            return new Point(m_currentLineIndex - m_firstVisibleLineIndex,
-                m_currentLinePosition - m_firstVisibleLineIndex);
+            return new Point(m_currentLinePosition - m_firstVisiblePositionIndex,
+               m_currentLineIndex - m_firstVisibleLineIndex);
         }
-
+/*
         protected string[] getTextWindow(int startingLine, int startingCol, int maxWidth, int lineCount)
         {
             string[] lines = new string[lineCount];
@@ -98,6 +121,11 @@ namespace Crsouza.Console.Forms
             }
             return lines;
         }
+*/
+        protected StringBuilder getCurrentLine()
+        {
+            return m_textLines[m_currentLineIndex];
+        }
 
 
 
@@ -105,37 +133,61 @@ namespace Crsouza.Console.Forms
         {
             base.OnKeyPressed(e);
 
+            char ch = e.KeyInfo.KeyChar;
 
             switch (e.KeyInfo.Key)
             {
                 case ConsoleKey.UpArrow:
-                  //  m_document.CurrentLineIndex--;
+                    setCaretPosition(m_currentLineIndex - 1, m_currentLinePosition);
+                    return;
                     break;
 
                 case ConsoleKey.DownArrow:
-                  //  m_document.CurrentLineIndex++;
+                    setCaretPosition(m_currentLineIndex + 1,m_currentLinePosition);
+                    return;
                     break;
 
                 case ConsoleKey.LeftArrow:
-                  //  m_document.CurrentLinePositionIndex--;
+                    setCaretPosition(m_currentLineIndex, m_currentLinePosition - 1);
+                    return;
                     break;
 
                 case ConsoleKey.RightArrow:
-                  //  m_document.CurrentLinePositionIndex++;
+                    setCaretPosition(m_currentLineIndex, m_currentLinePosition + 1);
+                    return;
                     break;
 
                 default:
                     break;
             }
 
-
-            if (!Char.IsControl(e.KeyInfo.KeyChar))
+            if (e.KeyInfo.Key == ConsoleKey.Backspace)
             {
-             //   m_document.Write(e.KeyInfo.KeyChar);
-                return;
+                if (m_currentLinePosition > 0)
+                {
+                    getCurrentLine().Remove(m_currentLinePosition - 1, 1);
+                    OnTextChanged(EventArgs.Empty);
+                    setCaretPosition(m_currentLineIndex, m_currentLinePosition - 1);
+                    return;
+                }
             }
 
-
+            else if (e.KeyInfo.Key == ConsoleKey.Delete)
+            {
+                if (m_currentLinePosition < getCurrentLine().Length)
+                {
+                    getCurrentLine().Remove(m_currentLinePosition, 1);
+                    OnTextChanged(EventArgs.Empty);
+                    setCaretPosition(m_currentLineIndex, m_currentLinePosition);
+                    return;
+                }
+            }
+            else if (char.IsLetterOrDigit(ch) || char.IsWhiteSpace(ch))
+            {
+                getCurrentLine().Insert(m_currentLinePosition, e.KeyInfo.KeyChar);
+                OnTextChanged(EventArgs.Empty);
+                setCaretPosition(m_currentLineIndex, m_currentLinePosition + 1);
+            }
         }
     }
 }
