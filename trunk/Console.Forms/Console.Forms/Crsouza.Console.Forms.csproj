@@ -69,6 +69,7 @@
     <Compile Include="TableLayoutPanel.cs" />
     <Compile Include="TextBox.cs" />
     <Compile Include="TextBoxBase.cs" />
+    <Compile Include="TextRenderer.cs" />
     <Compile Include="UserControl.cs" />
   </ItemGroup>
   <ItemGroup>
