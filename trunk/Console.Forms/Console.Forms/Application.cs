@@ -1,24 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 
 namespace Crsouza.Console.Forms
 {
+
+    /// <summary>
+    /// Provides static methods and properties to manage an console application,
+    /// such as methods to start and stop an application, to process console
+    /// keys, and properties to get information about an console application.
+    /// 
+    /// This class cannot be inherited.
+    /// </summary>
     public static class Application
     {
         private static bool m_exit;
 
 
-        public static void Run(Crsouza.Console.Forms.Form form)
+        /// <summary>
+        ///  Begins running a standard application message loop on the
+        ///  current thread, and makes the specified form visible.
+        /// </summary>
+        /// <param name="form"></param>
+        public static void Run(Form form)
         {
             Run(new ApplicationContext(form));
         }
 
-        public static void Run(Crsouza.Console.Forms.ApplicationContext applicationContext)
+        /// <summary>
+        ///   Begins running a standard application message loop on the
+        ///   current thread, with an ApplicationContext.
+        /// </summary>
+        /// <param name="applicationContext"></param>
+        public static void Run(ApplicationContext applicationContext)
         {
-            applicationContext.MainForm.Closed += new EventHandler(MainForm_Closed);
+            applicationContext.ThreadExit +=  new EventHandler(ApplicationContext_ThreadExit);
             applicationContext.MainForm.Show();
 
             ConsoleKeyInfo key;
@@ -30,17 +47,24 @@ namespace Crsouza.Console.Forms
             }
         }
 
-        static void MainForm_Closed(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
 
+        
+        /// <summary>
+        ///   Informs all message pumps that they must terminate, and then
+        ///   closes all application windows after the messages have been processed.
+        /// </summary>
         public static void Exit()
         {
             m_exit = true;
-            System.Console.ResetColor();
         }
 
+
+
+
+        private static void ApplicationContext_ThreadExit(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
     }
 }

@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Drawing;
+
 using Padding = System.Windows.Forms.Padding;
 
 namespace Crsouza.Console.Forms
 {
+
+    /// <summary>
+    ///   Defines the base class for controls, which are components
+    ///   with visual representation.
+    /// </summary>
     public abstract class Control : IDisposable
     {
         // Variables
@@ -52,14 +57,35 @@ namespace Crsouza.Console.Forms
 
 
         #region Constructors
-        public Control() : this(null)
+        /// <summary>
+        ///   Initializes a new instance of the Control class with default settings.
+        /// </summary>
+        public Control() : this(null, String.Empty)
         {
         }
 
+        /// <summary>
+        ///   Initializes a new instance of the Control class with specific text.
+        /// </summary>
+        /// <param name="text">The text displayed by the control.</param>
+        public Control(String text) : this(null, text)
+        {
+        }
+
+        /// <summary>
+        ///   The Control to be the parent of the control.
+        /// </summary>
+        /// <param name="parent"></param>
         public Control(Control parent) : this(parent, String.Empty)
         {
         }
 
+        /// <summary>
+        ///   Initializes a new instance of the Control class as a child control,
+        ///   with specific text;
+        /// </summary>
+        /// <param name="parent">The Control to be the parent of the control.</param>
+        /// <param name="text">The text displayed by the control.</param>
         public Control(Control parent, string text)
         {
             m_name = String.Empty;
@@ -74,16 +100,22 @@ namespace Crsouza.Console.Forms
 
 
         #region Properties
+        /// <summary>
+        ///   Gets or sets the parent container of the control.
+        /// </summary>
+        /// <remarks>
+        ///   Setting the Parent property value to a null reference removes
+        ///   the control from the Control.ControlCollection of its current
+        ///   parent control.
+        /// </remarks>
         public Control Parent
         {
-            get
-            {
-                return this.m_parent;
-            }
+            get { return this.m_parent; }
             set
             {
                 if (this.m_parent != value)
                 {
+                    //FIXME: Parent doesn't add/remove the control from the Control Collection
                     /*
                     if (value != null)
                     {
@@ -99,10 +131,26 @@ namespace Crsouza.Console.Forms
             }
         }
 
+        /// <summary>
+        ///   Gets or sets the height and width of the control.
+        /// </summary>
         public Size Size
         {
             get { return m_size; }
             set { m_size = value; }
+        }
+
+        /// <summary>
+        ///   Gets or sets the height and width of the client area of the control.
+        /// </summary>
+        /// <remarks>
+        ///   The client area of a control is the bounds of the control, minus the
+        ///   nonclient elements such as scroll bars, borders, title bars, and menus.
+        /// </remarks>
+        public Size ClientSize
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         public Padding Padding
@@ -143,15 +191,24 @@ namespace Crsouza.Console.Forms
             get { return m_text; }
             set
             {
-                m_text = value;
-                OnTextChanged(EventArgs.Empty);
+                if (m_text != value)
+                {
+                    m_text = value;
+                    OnTextChanged(EventArgs.Empty);
+                }
             }
         }
 
         public String Name
         {
             get { return m_name; }
-            set { m_name = value; }
+            set
+            {
+                if (m_name != value)
+                {
+                    m_name = value;
+                }
+            }
         }
 
         public ConsoleColor BackColor
@@ -180,6 +237,10 @@ namespace Crsouza.Console.Forms
             set { m_noBackground = value; }
         }
 
+        /// <summary>
+        ///   Gets or sets a value indicating whether the control
+        ///   and all its child controls are displayed.
+        /// </summary>
         public bool Visible
         {
             get { return m_visible; }
@@ -200,6 +261,11 @@ namespace Crsouza.Console.Forms
             }
         }
 
+        /// <summary>
+        ///   Gets or sets a value indicating whether the control can respond to user interaction.
+        /// </summary>
+        /// <remarks>
+        /// </remarks>
         public bool Enabled
         {
             get
@@ -223,6 +289,9 @@ namespace Crsouza.Console.Forms
             }
         }
 
+        /// <summary>
+        ///   Gets a value indicating whether the control has input focus.
+        /// </summary>
         public virtual bool Focused
         {
             get
@@ -318,9 +387,24 @@ namespace Crsouza.Console.Forms
             System.Console.SetCursorPosition(absolute.X, absolute.Y);
         }
 
+        /// <summary>
+        ///   Computes the location of the specified client point into screen coordinates.
+        /// </summary>
+        /// <param name="point">The screen coordinate Point to convert.</param>
+        /// <returns>A Point that represents the converted Point, p, in client coordinates.</returns>
         public Point PointToScreen(Point point)
         {
             return getAbsolutePosition(point);
+        }
+
+        /// <summary>
+        ///   Computes the location of the specified screen point into client coordinates.
+        /// </summary>
+        /// <param name="point">The client coordinate Point to convert.</param>
+        /// <returns>A Point that represents the converted Point, p, in screen coordinates.</returns>
+        public Point PointToClient(Point point)
+        {
+            throw new NotImplementedException();
         }
 
         public void ResetText()
@@ -406,7 +490,9 @@ namespace Crsouza.Console.Forms
             }
         }
 
-
+        /// <summary>
+        ///   Forces the control to apply layout logic to all its child controls.
+        /// </summary>
         public virtual void PerformLayout()
         {
             if (m_layoutSuspended)
@@ -579,17 +665,32 @@ namespace Crsouza.Console.Forms
         }
 
        
-
+        /// <summary>
+        ///   Raises the Paint event.
+        /// </summary>
+        /// <remarks>
+        ///   The OnPaint method also enables derived classes to handle the event
+        ///   without attaching a delegate. This is the preferred technique for
+        ///   handling the event in a derived class.
+        ///
+        ///   Notes to Inheritors: 
+        ///   When overriding OnPaint in a derived class, be sure to call the base
+        ///   class' OnPaint method so that registered delegates receive the event.
+        ///</remarks>
+        /// <param name="e">A ConsolePaintEventArgs that contains the event data.</param>
         protected virtual void OnPaint(ConsolePaintEventArgs e)
         {
             System.Console.ResetColor();
         }
 
+        /// <summary>
+        ///   Paints the background of the control.
+        /// </summary>
+        /// <param name="e">A ConsolePaintEventArgs that contains information about the control to paint.</param>
         protected virtual void OnPaintBackground(ConsolePaintEventArgs e)
         {
             if (m_noBackground)
                 return;
-
 
             e.Graphics.DrawRectangle(new Rectangle(0, 0, Width, Height),' ', m_foregroundColor, m_backgroundColor);
         }

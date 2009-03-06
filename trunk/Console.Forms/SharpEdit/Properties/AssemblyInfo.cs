@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NanoSharp")]
+[assembly: AssemblyTitle("SharpEdit")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NanoSharp")]
+[assembly: AssemblyProduct("SharpEdit")]
 [assembly: AssemblyCopyright("Copyright ©  2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("cf1876b2-0049-4f89-9072-8125938487bb")]
+[assembly: Guid("cfcd8f6a-dc12-4d44-8cc5-9a029c674443")]
 
 // Version information for an assembly consists of the following four values:
 //
