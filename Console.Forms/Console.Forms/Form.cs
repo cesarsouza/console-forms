@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
+#if !NO_WINFORMS_DEPENDENCY
 using DialogResult = System.Windows.Forms.DialogResult;
 using FormStartPosition = System.Windows.Forms.FormStartPosition;
+#endif
+
 
 namespace Crsouza.Console.Forms
 {
