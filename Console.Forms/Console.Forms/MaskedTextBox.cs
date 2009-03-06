@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Crsouza.Console.Forms
 {
-    public class UserControl : ContainerControl
+    public class MaskedTextBox : TextBoxBase
     {
     }
 }

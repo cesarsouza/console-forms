@@ -64,13 +64,25 @@ namespace Crsouza.Console.Forms
         {
             base.OnGotFocus(e);
 
-            SetCursorPosition(0, 0);
+            SetCursorPosition(getCursorPosition());
+        }
+
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+
+            Invalidate();
         }
 
         protected override void OnPaint(ConsolePaintEventArgs e)
         {
             base.OnPaint(e);
-            
+
+            for (int i = 0; i < LineCount; i++)
+            {
+                e.Graphics.DrawText(m_textLines[m_firstVisibleLineIndex + i - 1].ToString(),
+                    new Point(0, i), ForeColor, BackColor);
+            }
 
         }
 

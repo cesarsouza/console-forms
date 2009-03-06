@@ -194,23 +194,8 @@ namespace Crsouza.Console.Forms
 
                     m_visible = value;
 
-                    if (m_visible == false)
-                    {
-                        if (m_parent == null)
-                        {
-                            System.Console.ResetColor();
-                            System.Console.Clear();
-                        }
-                        else
-                        {
-                            Parent.PerformLayout();
-                        }
-                    }
-                    else
-                    {
-                        m_shown = true;
-                        PerformLayout();
-                    }
+                    OnVisibleChanged(EventArgs.Empty);
+
                 }
             }
         }
@@ -480,6 +465,7 @@ namespace Crsouza.Console.Forms
         #region Virtual Methods
         public virtual void Invalidate()
         {
+            PerformLayout();
         }
 
 
@@ -555,6 +541,24 @@ namespace Crsouza.Console.Forms
 
         protected virtual void OnVisibleChanged(EventArgs e)
         {
+            if (m_visible == false)
+            {
+                if (m_parent == null)
+                {
+                    System.Console.ResetColor();
+                    System.Console.Clear();
+                }
+                else
+                {
+                    Parent.PerformLayout();
+                }
+            }
+            else
+            {
+                m_shown = true;
+                PerformLayout();
+            }
+
             if (VisibleChanged != null)
                 VisibleChanged(this, e);
         }

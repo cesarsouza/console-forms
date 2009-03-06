@@ -47,8 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HelpBox.cs" />
-    <Compile Include="HelpBox.Designer.cs">
+    <Compile Include="Controls\CaptionLabel.cs" />
+    <Compile Include="Controls\CaptionLabel.Designer.cs">
+      <DependentUpon>CaptionLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\HelpBox.cs" />
+    <Compile Include="Dialogs\HelpBox.Designer.cs">
       <DependentUpon>HelpBox.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs" />

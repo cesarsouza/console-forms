@@ -1,96 +1,201 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Crsouza.Console.Forms.Application">
-    <Position X="12" Y="0.5" Width="1.75" />
+    <Position X="0.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAIAAAAABAAAI=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAIAAAQAAAAAI=</HashCode>
       <FileName>Application.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Crsouza.Console.Forms.ApplicationContext">
-    <Position X="14" Y="0.5" Width="2.25" />
+    <Position X="2.5" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AACAAAAABAAiAAAAAAAAAAAQAAAAAAAAgAAAAABAAAA=</HashCode>
+      <HashCode>AACAAAAABAAiAAAAAAAAAAAQAAAAAAAAgAAAAAAAAAA=</HashCode>
       <FileName>ApplicationContext.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Crsouza.Console.Forms.ConsoleKeyPressEventArgs" Collapsed="true">
-    <Position X="17.75" Y="1.25" Width="2.25" />
+    <Position X="5" Y="1.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAUIAAAAAgAAAAAAEAAAAAAAAQAAIAAAAAAAAA=</HashCode>
-      <FileName>ConsoleEvents.cs</FileName>
+      <HashCode>AAAAAAAUAAAAAAgAAAAAAAAAAAAAAAQAAIAAAAAAAAA=</HashCode>
+      <FileName>Events\ConsoleKeyPressEventHandler.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Crsouza.Console.Forms.ContainerControl">
-    <Position X="0.5" Y="1.75" Width="1.75" />
+    <Position X="9.75" Y="8" Width="1.75" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
+    <InheritanceLine Type="Crsouza.Console.Forms.ScrollableControl" ManuallyRouted="true">
+      <Path>
+        <Point X="12.75" Y="5.391" />
+        <Point X="12.75" Y="6.475" />
+        <Point X="10.625" Y="6.475" />
+        <Point X="10.625" Y="8" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>ACAAAAAAAAEAAgAAAAAAAgAAgAEAQAAAgAAgAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAEAAAAAAAACAAAAgAEAQAAAgAEgAAAAAgA=</HashCode>
       <FileName>ContainerControl.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Crsouza.Console.Forms.Control" Collapsed="true">
-    <Position X="5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ECAAAAAEBAEoggIABIIIQEQACAAMIAAAiAAACAJABAI=</HashCode>
-      <FileName>Control.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Crsouza.Console.Forms.Form">
-    <Position X="0.5" Y="5.5" Width="1.75" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAA=</HashCode>
-      <FileName>Form.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Crsouza.Console.Forms.Label">
-    <Position X="9.5" Y="1.75" Width="1.75" />
+  <Class Name="Crsouza.Console.Forms.Control" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Crsouza.Console.Forms.Control.ControlCollection" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Control.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>MzDIA4BEJaEIwqpEFIIIQnQKCQBNIhUIqYIiSwZRB0Q=</HashCode>
+      <FileName>Control.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Crsouza.Console.Forms.Form">
+    <Position X="7.5" Y="11.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>MAQBhACMEAARAAJCEAAEgAkCBAAEAAAAgAAAAACgBAg=</HashCode>
+      <FileName>Form.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.Label">
+    <Position X="16.5" Y="3.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AACAAAAAQAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Label.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Crsouza.Console.Forms.Line">
-    <Position X="2.75" Y="1.75" Width="1.75" />
+    <Position X="14.25" Y="3.25" Width="1.75" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
+    <InheritanceLine Type="Crsouza.Console.Forms.Control" ManuallyRouted="true">
+      <Path>
+        <Point X="17.375" Y="1.009" />
+        <Point X="17.375" Y="2.498" />
+        <Point X="15.125" Y="2.498" />
+        <Point X="15.125" Y="3.25" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAgAAAAAAAAAAAAAAEAAAAAAAEAAACAA=</HashCode>
+      <HashCode>AACAAAAAAQAAAAAAAAAAAAAAAAAAEAAAAAAAEAAACAA=</HashCode>
       <FileName>Line.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Crsouza.Console.Forms.Scrollbar">
-    <Position X="5" Y="1.75" Width="1.75" />
+    <Position X="19" Y="3.25" Width="1.75" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
+    <InheritanceLine Type="Crsouza.Console.Forms.Control" ManuallyRouted="true">
+      <Path>
+        <Point X="17.375" Y="1.009" />
+        <Point X="17.375" Y="2.498" />
+        <Point X="19.875" Y="2.498" />
+        <Point X="19.875" Y="3.25" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>gAAAAACAAAAAQgAAQAAAgCAAAAQAGAUAAIAgAAACAAA=</HashCode>
+      <HashCode>gACAAACAAAAAQAAAQAAAgCAAAAQAGAUAAIAgAAACAAA=</HashCode>
       <FileName>Scrollbar.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Crsouza.Console.Forms.TextBox">
-    <Position X="7.25" Y="1.75" Width="1.75" />
+    <Position X="25.5" Y="7.75" Width="1.75" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
+    <InheritanceLine Type="Crsouza.Console.Forms.TextBoxBase" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="24.875" Y="5.772" />
+        <Point X="24.875" Y="7.122" />
+        <Point X="26.312" Y="7.122" />
+        <Point X="26.312" Y="7.75" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>ACQABAQAAAEAQgAAAAAAAAAAEgAAAAAAAAAgAAAAQCA=</HashCode>
+      <HashCode>IASABAAAACAAQAAAAAgAAAAAEgAAAAAAAAAAQAIABAA=</HashCode>
       <FileName>TextBox.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Crsouza.Console.Forms.UserControl">
+    <Position X="11.75" Y="12" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.ScrollableControl">
+    <Position X="12" Y="3.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="Crsouza.Console.Forms.Control" ManuallyRouted="true">
+      <Path>
+        <Point X="17.375" Y="1.009" />
+        <Point X="17.375" Y="2.498" />
+        <Point X="12.75" Y="2.498" />
+        <Point X="12.75" Y="3.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAQAAAAAAAAAAAAAAAEgIAAAEAAAAAIAAAAAA=</HashCode>
+      <FileName>ScrollableControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.TextBoxBase">
+    <Position X="24" Y="3.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="Crsouza.Console.Forms.Control" ManuallyRouted="true">
+      <Path>
+        <Point X="17.375" Y="1.009" />
+        <Point X="17.375" Y="2.498" />
+        <Point X="24.875" Y="2.498" />
+        <Point X="24.875" Y="3.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AIgABASAAgEAgAAQIACAABQBAIAAAQAQBAAgCAAQAAA=</HashCode>
+      <FileName>TextBoxBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.MaskedTextBox">
+    <Position X="22.5" Y="7.75" Width="1.75" />
+    <InheritanceLine Type="Crsouza.Console.Forms.TextBoxBase" ManuallyRouted="true">
+      <Path>
+        <Point X="24.875" Y="5.772" />
+        <Point X="24.875" Y="7.122" />
+        <Point X="23.375" Y="7.122" />
+        <Point X="23.375" Y="7.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MaskedTextBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Delegate Name="Crsouza.Console.Forms.ConsoleKeyPressEventHandler" Collapsed="true">
-    <Position X="17.75" Y="0.5" Width="2.25" />
+    <Position X="5" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAQAQAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ConsoleEvents.cs</FileName>
+      <FileName>Events\ConsoleKeyPressEventHandler.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Font Name="Tahoma" Size="8.25" />
