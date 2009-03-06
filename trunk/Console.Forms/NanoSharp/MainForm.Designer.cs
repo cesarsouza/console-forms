@@ -11,10 +11,11 @@ namespace NanoSharp
     {
         Label lbProgramTitle;
         Label lbDocumentTitle;
-        Line line2;
         TextBox tbDocument;
-        Label lbHelpCaption;
-        Label lbHelpKey;
+        Label lbStatus;
+
+        CaptionLabel clHelp;
+        CaptionLabel clExit;
 
 
         public void InitializeComponent()
@@ -49,34 +50,34 @@ namespace NanoSharp
             tbDocument.Location = new System.Drawing.Point(0, 2);
             tbDocument.Padding = new System.Windows.Forms.Padding(1);
 
-            line2 = new Line();
-            line2.Size = new System.Drawing.Size(Width, 1);
-            line2.Location = new System.Drawing.Point(0, Height-3);
-            line2.Character = '_';
+            clHelp = new CaptionLabel();
+            clHelp.Text = "Get Help";
+            clHelp.Hotkey = "^H";
+            clHelp.Location = new System.Drawing.Point(0, Height - 2);
+            clHelp.Size = new System.Drawing.Size(Width, 1);
 
-            lbHelpKey = new Label();
-            lbHelpKey.Text = "^H";
-            lbHelpKey.Size = new System.Drawing.Size(Width, 1);
-            lbHelpKey.BackColor = ConsoleColor.Gray;
-            lbHelpKey.ForeColor = ConsoleColor.Black;
-            lbHelpKey.Location = new System.Drawing.Point(0, Height-1);
+            clExit = new CaptionLabel();
+            clExit.Text = "Exit";
+            clExit.Hotkey = "^Q";
+            clExit.Location = new System.Drawing.Point(0, Height - 1);
+            clExit.Size = new System.Drawing.Size(Width, 1);
 
-            lbHelpCaption = new Label();
-            lbHelpCaption.Text = "Get Help";
-            lbHelpCaption.Size = new System.Drawing.Size(Width, 1);
-            lbHelpCaption.NoBackground = true;
-            lbHelpCaption.Location = new System.Drawing.Point(3, Height-1);
+            lbStatus = new Label();
+            lbStatus.Text = "[ Read 0 Lines ]";
+            lbStatus.ForeColor = ConsoleColor.Black;
+            lbStatus.BackColor = ConsoleColor.Gray;
+            lbStatus.Size = new System.Drawing.Size(Width, 1);
+            lbStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            lbStatus.Location = new System.Drawing.Point(0, Height - 3);
+            lbStatus.NoBackground = true;
 
             this.Controls.Add(lbProgramTitle);
             this.Controls.Add(lbDocumentTitle);
             this.Controls.Add(tbDocument);
-            this.Controls.Add(line2);
-            this.Controls.Add(lbHelpKey);
-            this.Controls.Add(lbHelpCaption);
-
+            this.Controls.Add(clHelp);
+            this.Controls.Add(clExit);
+            this.Controls.Add(lbStatus);
             this.ResumeLayout(true);
-
-            tbDocument.Focus();
         }
     }
 }

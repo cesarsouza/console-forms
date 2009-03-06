@@ -96,7 +96,7 @@ namespace Crsouza.Console.Forms
 
             }
 
-            Visible = true;
+            Show();
             Focus();
 
             OnShown(EventArgs.Empty);
@@ -152,6 +152,16 @@ namespace Crsouza.Console.Forms
         {
             base.OnGotFocus(e);
         }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            if (IsShown == false && Visible == true)
+            {
+                OnLoad(EventArgs.Empty);
+            }
+
+            base.OnVisibleChanged(e);
+        }
         #endregion
 
 
@@ -190,7 +200,7 @@ namespace Crsouza.Console.Forms
         protected virtual void OnLoad(EventArgs e)
         {
             if (Load != null)
-                Load.Invoke(this, e);
+                Load(this, e);
         }
         #endregion
 

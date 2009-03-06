@@ -20,7 +20,8 @@ namespace NanoSharp
         {
             base.OnLoad(e);
 
-            tbDocument.Text = "Lorem ipsum dolor sit amet, consectetuer\n" +
+            tbDocument.Text = 
+                "Lorem ipsum dolor sit amet, consectetuer\n" +
                               "adipiscing elit, sed diam nonummy nibh euismod\n" +
                               "tincidunt ut laoreet dolore magna aliquam erat\n"+
                               "volutpat. Ut wisi enim ad minim veniam, quis nostrud\n"+

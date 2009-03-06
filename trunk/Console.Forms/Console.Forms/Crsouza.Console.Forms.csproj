@@ -58,6 +58,7 @@
     <Compile Include="IContainerControl.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Line.cs" />
+    <Compile Include="MaskedTextBox.cs" />
     <Compile Include="MessageBox.cs" />
     <Compile Include="Panel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="TableLayoutPanel.cs" />
     <Compile Include="TextBox.cs" />
     <Compile Include="TextBoxBase.cs" />
-    <Compile Include="TextControl\Document.cs" />
     <Compile Include="UserControl.cs" />
   </ItemGroup>
   <ItemGroup>
