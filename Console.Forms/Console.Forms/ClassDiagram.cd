@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Crsouza.Console.Forms.Application">
+    <Position X="12" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAIAAAAABAAAI=</HashCode>
+      <FileName>Application.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.ApplicationContext">
+    <Position X="14" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAABAAiAAAAAAAAAAAQAAAAAAAAgAAAAABAAAA=</HashCode>
+      <FileName>ApplicationContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.ConsoleKeyPressEventArgs" Collapsed="true">
+    <Position X="17.75" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAUIAAAAAgAAAAAAEAAAAAAAAQAAIAAAAAAAAA=</HashCode>
+      <FileName>ConsoleEvents.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.ContainerControl">
+    <Position X="0.5" Y="1.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAEAAgAAAAAAAgAAgAEAQAAAgAAgAAAAAAA=</HashCode>
+      <FileName>ContainerControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.Control" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECAAAAAEBAEoggIABIIIQEQACAAMIAAAiAAACAJABAI=</HashCode>
+      <FileName>Control.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.Form">
+    <Position X="0.5" Y="5.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Form.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Crsouza.Console.Forms.Label">
+    <Position X="9.5" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Label.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.Line">
+    <Position X="2.75" Y="1.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAgAAAAAAAAAAAAAAEAAAAAAAEAAACAA=</HashCode>
+      <FileName>Line.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.Scrollbar">
+    <Position X="5" Y="1.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>gAAAAACAAAAAQgAAQAAAgCAAAAQAGAUAAIAgAAACAAA=</HashCode>
+      <FileName>Scrollbar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crsouza.Console.Forms.TextBox">
+    <Position X="7.25" Y="1.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ACQABAQAAAEAQgAAAAAAAAAAEgAAAAAAAAAgAAAAQCA=</HashCode>
+      <FileName>TextBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Delegate Name="Crsouza.Console.Forms.ConsoleKeyPressEventHandler" Collapsed="true">
+    <Position X="17.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ConsoleEvents.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
