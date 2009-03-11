@@ -52,7 +52,6 @@ namespace NanoSharp
             btnOk.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             btnOk.BackColor = ConsoleColor.DarkGreen;
             btnOk.ForeColor = ConsoleColor.Green;
-            btnOk.NoBackground = false;
             btnOk.Location = new System.Drawing.Point(1, Height - 1);
             btnOk.Click += new EventHandler(btnOk_Click);
             btnOk.TabIndex = 1;
@@ -62,7 +61,6 @@ namespace NanoSharp
             btnCancel.Size = new System.Drawing.Size(6, 1);
             btnCancel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             btnCancel.BackColor = ConsoleColor.DarkRed;
-            btnCancel.NoBackground = false;
             btnCancel.ForeColor = ConsoleColor.Red;
             btnCancel.Location = new System.Drawing.Point(Width-btnCancel.Width-1, Height - 1);
             btnCancel.Click += new EventHandler(btnCancel_Click);

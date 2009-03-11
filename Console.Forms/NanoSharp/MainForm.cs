@@ -11,8 +11,7 @@ namespace NanoSharp
         public MainForm()
         {
             InitializeComponent();
-
-            this.ActiveControl = tbDocument;
+            ActiveControl = tbDocument;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -54,13 +53,6 @@ namespace NanoSharp
             base.OnActivated(e);
 
             this.ActiveControl = tbDocument;
-        }
-
-        protected override void OnKeyPressed(ConsoleKeyPressEventArgs e)
-        {
-            base.OnKeyPressed(e);
-
-
         }
     }
 }
