@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Globalization;
 
 using Padding = System.Windows.Forms.Padding;
+using System.Collections;
 
 namespace Crsouza.Console.Forms
 {
@@ -33,9 +35,9 @@ namespace Crsouza.Console.Forms
         private bool m_disposed;
 
         //TODO: Nullable console colors to use parent's color?
-        private ConsoleColor m_backgroundColor = ConsoleColor.Black;
-        private ConsoleColor m_foregroundColor = ConsoleColor.Gray;
-        private bool m_noBackground = true;
+        private ConsoleColor? m_backgroundColor = ConsoleColor.Black;
+        private ConsoleColor? m_foregroundColor = ConsoleColor.Gray;
+        private bool m_noBackground = false;
 
         // Events
         public event ConsoleKeyPressEventHandler KeyPress;
@@ -213,7 +215,17 @@ namespace Crsouza.Console.Forms
 
         public ConsoleColor BackColor
         {
-            get { return m_backgroundColor; }
+            get
+            {
+                if (m_backgroundColor.HasValue == false)
+                {
+                    Control parent = Parent;
+                    if (parent != null)
+                        return parent.BackColor;
+                    else return ConsoleColor.Black;
+                }
+                else return m_backgroundColor.Value;
+            }
             set
             {
                 m_backgroundColor = value;
@@ -223,7 +235,17 @@ namespace Crsouza.Console.Forms
 
         public ConsoleColor ForeColor
         {
-            get { return m_foregroundColor; }
+            get
+            {
+                if (m_foregroundColor.HasValue == false)
+                {
+                    Control parent = Parent;
+                    if (parent != null)
+                        return parent.BackColor;
+                    else return ConsoleColor.Gray;
+                }
+                else return m_foregroundColor.Value;
+            }
             set
             {
                 m_foregroundColor = value;
@@ -231,6 +253,7 @@ namespace Crsouza.Console.Forms
             }
         }
 
+        //FIXME: This is a hack and should be removed in future
         public bool NoBackground
         {
             get { return m_noBackground; }
@@ -354,7 +377,7 @@ namespace Crsouza.Console.Forms
         {
             get
             {
-                if (!this.IsShown)
+                if (!this.IsHandleCreated)
                 {
                     return false;
                 }
@@ -419,7 +442,7 @@ namespace Crsouza.Console.Forms
                 (m_parent as ContainerControl).ActiveControl = this;
             }
 
-            if (IsShown)
+            if (IsHandleCreated)
                 OnGotFocus(EventArgs.Empty);
         }
 
@@ -464,12 +487,53 @@ namespace Crsouza.Console.Forms
             {
                 ctl = null;
             }
+            Control next = GetNextControl(this, forward);
+            next.Select();
+
             return true;
         }
 
         public Control GetNextControl(Control ctl, bool forward)
         {
-            return null;  
+            Control[] controls = GetChildControlsInTabOrder(true);
+
+            if (controls.Length == 0)
+            {
+                if (Parent != null)
+                    return Parent.GetNextControl(this, forward);
+                else return this;
+            }
+
+            for (int i = 0; i < controls.Length; i++)
+            {
+                if (controls[i] == ctl)
+                {
+                    if (forward)
+                    {
+                        if (i < controls.Length-1)
+                            return controls[i + 1];
+                        else
+                        {
+                            if (Parent != null)
+                                return Parent.GetNextControl(this, forward);
+                            return controls[0];
+                        }
+                    }
+                    else
+                    {
+                        if (i > 0)
+                            return controls[i - 1];
+                        else
+                        {
+                            if (Parent != null)
+                                return Parent.GetNextControl(this, forward);
+                            return controls[controls.Length - 1];
+                        }
+                    }
+                }
+            }
+
+            throw new InvalidOperationException();
         }
 
         public virtual bool CanSelect
@@ -500,19 +564,29 @@ namespace Crsouza.Console.Forms
 
             if (!m_shown)
                 return;
-
+/*
             if (Parent == null)
             {
                 System.Console.BackgroundColor = BackColor;
                 System.Console.ForegroundColor = ForeColor;
+
+                //FIXME: The following line is a hack and should be removed in future.
                 System.Console.Clear();
             }
-
+*/
             if (m_visible)
             {
                 ConsolePaintEventArgs e = new ConsolePaintEventArgs(CreateGraphics());
                 this.OnPaintBackground(e);
                 this.OnPaint(e);
+
+                if (!LayoutSuspended && IsHandleCreated)
+                {
+                    foreach (Control control in Controls)
+                    {
+                        control.PerformLayout();
+                    }
+                }
 
                 System.Console.WindowTop = 0;
                // System.Console.SetCursorPosition(0, 0);
@@ -594,9 +668,54 @@ namespace Crsouza.Console.Forms
                 }
             }
         }
+
+        private List<ControlTabOrderHolder> GetChildControlsTabOrderList()
+        {
+            List<ControlTabOrderHolder> list = new List<ControlTabOrderHolder>();
+            foreach (Control control in this.Controls)
+            {
+                int newOrder = (control == null) ? -1 : control.TabIndex;
+                list.Add(new ControlTabOrderHolder(list.Count, newOrder, control));
+            }
+            list.Sort(new ControlTabOrderComparer());
+            return list;
+        }
+
+
         #endregion
 
 
+        #region Static Methods
+        public static bool IsMnemonic(char charCode, string text)
+        {
+#if NO_WINFORMS_DEPENDENCY
+            if (charCode == '&')
+            {
+                return false;
+            }
+            if (text != null && text.Length > 0)
+            {
+                int mnemonicCharIndex = -1;
+                charCode = char.ToUpper(charCode, CultureInfo.CurrentCulture);
+
+                mnemonicCharIndex = text.IndexOf('&', 0) + 1;
+
+                if ((mnemonicCharIndex <= 0) || (mnemonicCharIndex >= text.Length))
+                    return false; // string doesn't have a mnemonic
+
+                char mnemonicChar = Char.ToUpper(text[mnemonicCharIndex], CultureInfo.CurrentCulture);
+
+                if (mnemonicChar == charCode)
+                    return true; // yes, charCode is mnemonic in text
+                return false;
+            }
+
+            return false;
+#else
+            return System.Windows.Forms.Control.IsMnemonic(charCode, text);
+#endif
+        }
+        #endregion
 
 
 
@@ -627,22 +746,18 @@ namespace Crsouza.Console.Forms
 
         protected virtual void OnVisibleChanged(EventArgs e)
         {
-            if (m_visible == false)
-            {
-                if (m_parent == null)
-                {
-                    System.Console.ResetColor();
-                    System.Console.Clear();
-                }
-                else
-                {
-                    Parent.PerformLayout();
-                }
-            }
-            else
+            if (Visible)
             {
                 m_shown = true;
                 PerformLayout();
+                
+            }
+            else
+            {
+                if (m_parent != null)
+                {
+                    Parent.PerformLayout();
+                }
             }
 
             if (VisibleChanged != null)
@@ -653,12 +768,10 @@ namespace Crsouza.Console.Forms
         {
             if (e.KeyInfo.Key == ConsoleKey.Tab)
             {
-                if (Parent != null)
-                Parent.SelectNextControl(this, true, true, true, true);
+                SelectNextControl(this, !e.Shift, true, true, true);
             }
             else
             {
-
                 if (KeyPress != null)
                     KeyPress(this, e);
             }
@@ -692,7 +805,7 @@ namespace Crsouza.Console.Forms
             if (m_noBackground)
                 return;
 
-            e.Graphics.DrawRectangle(new Rectangle(0, 0, Width, Height),' ', m_foregroundColor, m_backgroundColor);
+            e.Graphics.DrawRectangle(new Rectangle(0, 0, Width, Height),' ', ForeColor, BackColor);
         }
 
         protected virtual void OnGotFocus(EventArgs e)
@@ -726,6 +839,7 @@ namespace Crsouza.Console.Forms
             if (ForeColorChanged != null)
                 ForeColorChanged(this, e);
 
+            // Notify child controls forecolor has changed
             if (m_controls != null)
             {
                 for (int i = 0; i < m_controls.Count; i++)
@@ -742,6 +856,7 @@ namespace Crsouza.Console.Forms
             if (BackColorChanged != null)
                 BackColorChanged(this, e);
 
+            // Notify child controls backcolor has changed
             if (m_controls != null)
             {
                 for (int i = 0; i < m_controls.Count; i++)
@@ -786,12 +901,19 @@ namespace Crsouza.Console.Forms
             get { return m_layoutSuspended; }
         }
 
-        internal protected bool IsShown
+        /// <summary>
+        ///   
+        /// </summary>
+        /// <remarks>
+        ///   This is just an emulation of WinForms behaviour as Console
+        ///   Controls doesn't have windows handles.
+        /// </remarks>
+        internal protected bool IsHandleCreated
         {
             get
             {
                 if (m_parent != null)
-                    return m_parent.IsShown;
+                    return m_parent.IsHandleCreated;
                 return m_shown;
             }
         }
@@ -801,6 +923,19 @@ namespace Crsouza.Console.Forms
             if (m_parent != null)
                 return m_parent as ContainerControl;
             else return null;
+        }
+
+
+
+        internal Control[] GetChildControlsInTabOrder(bool handleCreatedOnly)
+        {
+            var childControlsTabOrderList = GetChildControlsTabOrderList();
+            Control[] controlArray = new Control[childControlsTabOrderList.Count];
+            for (int i = 0; i < childControlsTabOrderList.Count; i++)
+            {
+                controlArray[i] = childControlsTabOrderList[i].control;
+            }
+            return controlArray;
         }
         #endregion
 
@@ -827,21 +962,50 @@ namespace Crsouza.Console.Forms
                 base.Add(control);
             }
 
-            //TODO: This obviously needs some optimizations
+            
             public int GetChildIndex(Control child)
             {
-                for (int i = 0; i < Count; i++)
-                {
-                    if (this[i] == child)
-                        return i;
-                }
-                throw new InvalidOperationException();
+                return this.IndexOf(child);
             }
+
 
 
             
 
         }
+
+        private class ControlTabOrderHolder
+        {
+            // Fields
+            internal readonly Control control;
+            internal readonly int newOrder;
+            internal readonly int oldOrder;
+
+            // Methods
+            internal ControlTabOrderHolder(int oldOrder, int newOrder, Control control)
+            {
+                this.oldOrder = oldOrder;
+                this.newOrder = newOrder;
+                this.control = control;
+            }
+        }
+
+        private class ControlTabOrderComparer : IComparer<Control.ControlTabOrderHolder>
+        {
+            // Methods
+            int IComparer<Control.ControlTabOrderHolder>.Compare(Control.ControlTabOrderHolder x,
+                Control.ControlTabOrderHolder y)
+            {
+                int d = x.newOrder - y.newOrder;
+                if (d == 0)
+                {
+                    d = x.oldOrder - y.oldOrder;
+                }
+                return d;
+            }
+        }
+
+
         #endregion
 
 

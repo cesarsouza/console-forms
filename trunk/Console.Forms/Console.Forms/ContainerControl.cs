@@ -6,27 +6,27 @@ namespace Crsouza.Console.Forms
 {
     public abstract class ContainerControl : ScrollableControl, IContainerControl
     {
-        private ControlCollection m_controlCollection;
         private Control m_activeControl;
 
         public ContainerControl()
         {
-            m_controlCollection = new ControlCollection(this);
+
         }
 
         public override void PerformLayout()
         {
             base.PerformLayout();
-
-            if (!LayoutSuspended && IsShown)
-            {
-                foreach (Control control in m_controlCollection)
-                {
-                    control.PerformLayout();
-                }
-            }
-
+            /*
+                        if (!LayoutSuspended && IsHandleCreated)
+                        {
+                            foreach (Control control in Controls)
+                            {
+                                control.PerformLayout();
+                            }
+                        }
+             */
             ActivateControl(ActiveControl);
+
         }
         
 
@@ -37,11 +37,6 @@ namespace Crsouza.Console.Forms
 
             if (m_activeControl != null)
                 m_activeControl.Focus();
-        }
-
-        public ControlCollection Controls
-        {
-            get { return m_controlCollection; }
         }
 
         public Control ActiveControl
