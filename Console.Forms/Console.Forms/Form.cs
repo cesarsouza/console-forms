@@ -74,7 +74,7 @@ namespace Crsouza.Console.Forms
         #region Public Methods
         public void Show(Form owner)
         {
-            this.Parent = owner;
+          //  this.Parent = owner;
             this.Owner = owner;
 
             switch (m_startPosition)
@@ -89,8 +89,8 @@ namespace Crsouza.Console.Forms
                     break;
 
                 case FormStartPosition.CenterParent:
-                    this.Location = new System.Drawing.Point(Parent.Left + (Parent.Width - this.Width) / 2,
-                      Parent.Top + (Parent.Height - this.Height) / 2);
+                    this.Location = new System.Drawing.Point(Owner.Left + (Owner.Width - this.Width) / 2,
+                      Owner.Top + (Owner.Height - this.Height) / 2);
                     break;
 
                 default:
@@ -118,11 +118,25 @@ namespace Crsouza.Console.Forms
             }
         }
 
+        /// <summary>
+        ///    Activates the form and gives it focus.
+        /// </summary>
+        /// <remarks>
+        ///    Activating a form brings it to the front if this is the active application,
+        ///    or it flashes the window caption if this is not the active application. The
+        ///    form must be visible for this method to have any effect. To determine the
+        ///    active form in an application, use the ActiveForm property or the ActiveMdiChild
+        ///    property if your forms are in a Multiple-document interface (MDI) application.
+        /// </remarks>
         public void Activate()
         {
-            updateTitle();
+            if (Visible)
+            {
+                updateTitle();
+                Focus();
 
-            OnActivated(EventArgs.Empty);
+                OnActivated(EventArgs.Empty);
+            }
         }
 
         public void Close()
@@ -157,9 +171,17 @@ namespace Crsouza.Console.Forms
 
         protected override void OnVisibleChanged(EventArgs e)
         {
-            if (IsShown == false && Visible == true)
+            if (Visible)
             {
-                OnLoad(EventArgs.Empty);
+                if (!IsHandleCreated)
+                    OnLoad(EventArgs.Empty);
+            }
+            else
+            {
+                if (Owner != null)
+                {
+                    Owner.PerformLayout();
+                }
             }
 
             base.OnVisibleChanged(e);
