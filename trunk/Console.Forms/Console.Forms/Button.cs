@@ -12,7 +12,7 @@ namespace Crsouza.Console.Forms
     {
         
         private DialogResult m_dialogResult;
-        private HorizontalAlignment m_textAlign;
+        private HorizontalAlignment m_textAlign = HorizontalAlignment.Center;
         
 
         public Button()

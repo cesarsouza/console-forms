@@ -81,6 +81,11 @@ namespace Crsouza.Console.Forms
             SetCursorPosition(p);
         }
 
+        protected override void OnPaintBackground(ConsolePaintEventArgs e)
+        {
+            //base.OnPaintBackground(e);
+        }
+
         protected override void OnPaint(ConsolePaintEventArgs e)
         {
             base.OnPaint(e);

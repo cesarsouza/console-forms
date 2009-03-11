@@ -12,13 +12,13 @@ namespace NanoSharp
         public HelpBox()
         {
             InitializeComponent();
-
-            this.ActiveControl = btnOk;
+            ActiveControl = btnOk;
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
             Close();
+            
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

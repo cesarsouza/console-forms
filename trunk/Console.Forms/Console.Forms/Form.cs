@@ -105,7 +105,7 @@ namespace Crsouza.Console.Forms
         }
 
 
-        public void ShowDialog(Form owner)
+        public DialogResult ShowDialog(Form owner)
         {
             Show(owner);
 
@@ -116,6 +116,8 @@ namespace Crsouza.Console.Forms
                 key = System.Console.ReadKey(true);
                 ProcessKey(key);
             }
+
+            return DialogResult;
         }
 
         /// <summary>
