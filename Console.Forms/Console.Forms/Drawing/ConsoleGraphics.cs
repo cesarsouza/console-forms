@@ -41,7 +41,7 @@ namespace Crsouza.Console.Forms
 
         public void DrawRectangle(Rectangle rectangle, ConsoleColor foreground, ConsoleColor background)
         {
-            
+
             for (int i = rectangle.Y; i < rectangle.Height; i++)
             {
                 for (int j = rectangle.X; j < rectangle.Width; j++)
@@ -52,17 +52,33 @@ namespace Crsouza.Console.Forms
         }
 
 
-        public void DrawText(string text, Point location, ConsoleColor foreground, ConsoleColor background)
+        public void DrawText(string text, Point location, ConsoleColor foreground, ConsoleColor background, bool multiline)
         {
+            if ((location.X < 0 || location.X >= m_area.Width) ||
+                (location.Y < 0 || location.Y >= m_area.Height))
+            {
+                return;
+            }
+
             List<String> lines = new List<string>();
             int lineSize = m_area.Width;
 
-            while (text.Length > m_area.Width)
+            if (multiline)
             {
-                lines.Add(text.Substring(0, lineSize - 1) + "$");
-                text = text.Substring(lineSize, text.Length - lineSize);
+                while (text.Length > m_area.Width)
+                {
+                    lines.Add(text.Substring(0, lineSize));
+                    text = text.Substring(lineSize, text.Length - lineSize);
+                }
+                lines.Add(text);
             }
-            lines.Add(text);
+            else
+            {
+                if (text.Length > m_area.Width)
+                    lines.Add(text.Substring(0, lineSize));
+                else lines.Add(text);
+            }
+
 
             for (int i = 0; i < lines.Count; i++)
             {

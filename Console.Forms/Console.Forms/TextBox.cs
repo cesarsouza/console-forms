@@ -92,10 +92,10 @@ namespace Crsouza.Console.Forms
             base.OnPaint(e);
 
             string line;
-            for (int i = 0; i < LineCount; i++)
+            for (int i = 0; i < LineCount-m_firstVisibleLineIndex; i++)
             {
                 line = m_textLines[m_firstVisibleLineIndex + i].ToString();
-                e.Graphics.DrawText(line, new Point(0, i), ForeColor, BackColor);
+                e.Graphics.DrawText(line, new Point(0, i), ForeColor, BackColor, false);
             }
 
             if (m_selecting)

@@ -43,6 +43,7 @@ namespace NanoSharp
             lbAbout.BackColor = ConsoleColor.DarkGreen;
             lbAbout.ForeColor = ConsoleColor.Green;
             lbAbout.NoBackground = false;
+            lbAbout.Multiline = true;
             lbAbout.Padding = new System.Windows.Forms.Padding(0);
             lbAbout.Location = new System.Drawing.Point(1, 2);
 
