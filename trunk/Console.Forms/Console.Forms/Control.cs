@@ -1,11 +1,12 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Globalization;
-
-using Padding = System.Windows.Forms.Padding;
 using System.Collections;
+using System;
+using System.Windows.Forms;
+using Crsouza.Console.Forms.Drawing;
 
 namespace Crsouza.Console.Forms
 {
@@ -62,7 +63,8 @@ namespace Crsouza.Console.Forms
         /// <summary>
         ///   Initializes a new instance of the Control class with default settings.
         /// </summary>
-        public Control() : this(null, String.Empty)
+        public Control()
+            : this(null, String.Empty)
         {
         }
 
@@ -70,7 +72,8 @@ namespace Crsouza.Console.Forms
         ///   Initializes a new instance of the Control class with specific text.
         /// </summary>
         /// <param name="text">The text displayed by the control.</param>
-        public Control(String text) : this(null, text)
+        public Control(String text)
+            : this(null, text)
         {
         }
 
@@ -78,7 +81,8 @@ namespace Crsouza.Console.Forms
         ///   The Control to be the parent of the control.
         /// </summary>
         /// <param name="parent"></param>
-        public Control(Control parent) : this(parent, String.Empty)
+        public Control(Control parent)
+            : this(parent, String.Empty)
         {
         }
 
@@ -91,8 +95,8 @@ namespace Crsouza.Console.Forms
         public Control(Control parent, string text)
         {
             m_name = String.Empty;
-            m_size = new Size(5,10);
-            m_location = new Point(0,0);
+            m_size = new Size(5, 10);
+            m_location = new Point(0, 0);
             m_parent = parent;
             m_text = text;
         }
@@ -396,7 +400,7 @@ namespace Crsouza.Console.Forms
         #region Public Methods
         public ConsoleGraphics CreateGraphics()
         {
-            Point p = getAbsolutePosition(0,0);
+            Point p = getAbsolutePosition(0, 0);
             return new ConsoleGraphics(new Rectangle(p, Size));
         }
 
@@ -404,10 +408,13 @@ namespace Crsouza.Console.Forms
         {
             SetCursorPosition(new Point(x, y));
         }
+
         public void SetCursorPosition(Point point)
         {
             Point absolute = PointToScreen(point);
-            System.Console.SetCursorPosition(absolute.X, absolute.Y);
+            if (absolute.X >= 0 && absolute.X < System.Console.WindowWidth &&
+                absolute.Y >= 0 && absolute.Y < System.Console.WindowHeight)
+                System.Console.SetCursorPosition(absolute.X, absolute.Y);
         }
 
         /// <summary>
@@ -510,7 +517,7 @@ namespace Crsouza.Console.Forms
                 {
                     if (forward)
                     {
-                        if (i < controls.Length-1)
+                        if (i < controls.Length - 1)
                             return controls[i + 1];
                         else
                         {
@@ -540,9 +547,9 @@ namespace Crsouza.Console.Forms
         {
             get
             {
-                 if (!m_selectable)
-                     return false;
-                 
+                if (!m_selectable)
+                    return false;
+
                 for (Control control = this; control != null; control = control.m_parent)
                 {
                     if (!control.Enabled || !control.Visible)
@@ -564,16 +571,16 @@ namespace Crsouza.Console.Forms
 
             if (!m_shown)
                 return;
-/*
-            if (Parent == null)
-            {
-                System.Console.BackgroundColor = BackColor;
-                System.Console.ForegroundColor = ForeColor;
+            /*
+                        if (Parent == null)
+                        {
+                            System.Console.BackgroundColor = BackColor;
+                            System.Console.ForegroundColor = ForeColor;
 
-                //FIXME: The following line is a hack and should be removed in future.
-                System.Console.Clear();
-            }
-*/
+                            //FIXME: The following line is a hack and should be removed in future.
+                            System.Console.Clear();
+                        }
+            */
             if (m_visible)
             {
                 ConsolePaintEventArgs e = new ConsolePaintEventArgs(CreateGraphics());
@@ -583,17 +590,16 @@ namespace Crsouza.Console.Forms
                 if (!LayoutSuspended && IsHandleCreated)
                 {
                     foreach (Control control in Controls)
-                    {
                         control.PerformLayout();
-                    }
                 }
 
-                System.Console.WindowTop = 0;
-               // System.Console.SetCursorPosition(0, 0);
+                if (Parent == null)
+                    ConsoleCanvas.Instance.Update();
+
             }
         }
 
-        
+
         public void Select()
         {
             if (CanSelect)
@@ -613,7 +619,8 @@ namespace Crsouza.Console.Forms
         {
             m_layoutSuspended = false;
 
-            if (performLayout) this.PerformLayout();
+            if (performLayout)
+                this.PerformLayout();
         }
 
 
@@ -625,7 +632,14 @@ namespace Crsouza.Console.Forms
         #region Virtual Methods
         public virtual void Invalidate()
         {
-            PerformLayout();
+            if (!LayoutSuspended && IsHandleCreated)
+            {
+                ConsolePaintEventArgs e = new ConsolePaintEventArgs(CreateGraphics());
+                this.OnPaintBackground(e);
+                this.OnPaint(e);
+
+                ConsoleCanvas.Instance.Update();
+            }
         }
 
 
@@ -637,10 +651,10 @@ namespace Crsouza.Console.Forms
         internal protected virtual Control GetFirstChildControlInTabOrder(bool forward)
         {
             throw new NotImplementedException();
-            return null;
+
         }
         #endregion
-        
+
 
 
 
@@ -653,7 +667,7 @@ namespace Crsouza.Console.Forms
         private Point getAbsolutePosition(Point point)
         {
             if (m_parent == null)
-                return new Point(point.X + Left, point.Y+Top);
+                return new Point(point.X + Left, point.Y + Top);
             else return Parent.getAbsolutePosition(new Point(point.X + Left, point.Y + Top));
         }
 
@@ -750,7 +764,7 @@ namespace Crsouza.Console.Forms
             {
                 m_shown = true;
                 PerformLayout();
-                
+
             }
             else
             {
@@ -777,7 +791,7 @@ namespace Crsouza.Console.Forms
             }
         }
 
-       
+
         /// <summary>
         ///   Raises the Paint event.
         /// </summary>
@@ -805,7 +819,7 @@ namespace Crsouza.Console.Forms
             if (m_noBackground)
                 return;
 
-            e.Graphics.DrawRectangle(new Rectangle(0, 0, Width, Height),' ', ForeColor, BackColor);
+            e.Graphics.DrawRectangle(new Rectangle(0, 0, Width, Height), ' ', ForeColor, BackColor);
         }
 
         protected virtual void OnGotFocus(EventArgs e)
@@ -881,7 +895,7 @@ namespace Crsouza.Console.Forms
 
 
 
-        
+
 
 
 
@@ -962,7 +976,7 @@ namespace Crsouza.Console.Forms
                 base.Add(control);
             }
 
-            
+
             public int GetChildIndex(Control child)
             {
                 return this.IndexOf(child);
@@ -970,7 +984,7 @@ namespace Crsouza.Console.Forms
 
 
 
-            
+
 
         }
 

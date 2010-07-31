@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Windows.Forms;
 
-using Scrollbars = System.Windows.Forms.ScrollBars;
 
 
 namespace Crsouza.Console.Forms
@@ -11,7 +11,7 @@ namespace Crsouza.Console.Forms
     public class TextBox : TextBoxBase
     {
 
-        private Scrollbars m_scrollBars;
+        private ScrollBars m_scrollBars;
 
 
         public TextBox()
@@ -20,7 +20,7 @@ namespace Crsouza.Console.Forms
 
 
 
-        public Scrollbars Scrollbars
+        public ScrollBars Scrollbars
         {
             get { return m_scrollBars; }
             set { m_scrollBars = value; }
@@ -38,7 +38,7 @@ namespace Crsouza.Console.Forms
         {
         }
 
-        
+
         public void Copy()
         {
         }
@@ -54,7 +54,8 @@ namespace Crsouza.Console.Forms
         public string SelectedText
         {
             get { throw new NotImplementedException(); }
-            set {
+            set
+            {
                 // overwrite selected text
             }
         }
@@ -83,7 +84,7 @@ namespace Crsouza.Console.Forms
 
         protected override void OnPaintBackground(ConsolePaintEventArgs e)
         {
-            //base.OnPaintBackground(e);
+            base.OnPaintBackground(e);
         }
 
         protected override void OnPaint(ConsolePaintEventArgs e)
@@ -95,8 +96,15 @@ namespace Crsouza.Console.Forms
             {
                 line = m_textLines[m_firstVisibleLineIndex + i].ToString();
                 e.Graphics.DrawText(line, new Point(0, i), ForeColor, BackColor);
-                if (line.Length < Width)
-                    e.Graphics.DrawLine(' ', new Point(line.Length, i), new Point(Width, i), ForeColor, BackColor);
+            }
+
+            if (m_selecting)
+            {
+                e.Graphics.DrawRectangle(
+                    new Rectangle(m_selectionStart.X, m_selectionStart.Y,
+                    m_selectStop.X - m_selectionStart.X,
+                    m_selectStop.Y - m_selectionStart.Y),
+                    BackColor, ForeColor);
             }
 
         }

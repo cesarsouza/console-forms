@@ -171,24 +171,24 @@ namespace Crsouza.Console.Forms
             if (m_orientation == ScrollOrientation.HorizontalScroll)
             {
           //      System.Console.SetCursorPosition(Left, Top);
-                for (int i = 0; i < Width; i++)
-                    System.Console.Write('-');
+          //      for (int i = 0; i < Width; i++)
+         //           System.Console.Write('-');
 
                 trackPosition = (m_value / m_maximum) * Width + Top;
           //      System.Console.SetCursorPosition(Left, trackPosition);
-                System.Console.Write('+');
+          //      System.Console.Write('+');
             }
             else
             {
                 for (int i = 0; i < Height; i++)
                 {
              //       System.Console.SetCursorPosition(Left, Top + i);
-                    System.Console.Write('|');
+            //        System.Console.Write('|');
                 }
 
                 trackPosition = (m_value / m_maximum) * Height + Left;
            //     System.Console.SetCursorPosition(trackPosition, Top);
-                System.Console.Write('+');
+              //  System.Console.Write('+');
             }
         }
     }

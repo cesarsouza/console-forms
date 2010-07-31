@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using Crsouza.Console.Forms.Drawing;
+
 
 namespace Crsouza.Console.Forms
 {
     public sealed class ConsoleGraphics
     {
         private Rectangle m_area;
+
+
+
 
         public ConsoleGraphics(Rectangle area)
         {
@@ -21,75 +26,63 @@ namespace Crsouza.Console.Forms
             {
                 if (i < 0 || i > m_area.Width)
                     throw new IndexOutOfRangeException();
-                System.Console.SetCursorPosition(i + m_area.Left, j + m_area.Top);
-                System.Console.Write(value);
-              //  System.Console.WindowTop = 0;
+
+                ConsoleCanvas.Instance[m_area.X + i, m_area.Y + j] = new ConsoleElement(value, ConsoleColor.Black, ConsoleColor.White);
             }
         }
 
         public void DrawRectangle(Rectangle rectangle, char ch, ConsoleColor foreground, ConsoleColor background)
         {
-            bool cursorvisibility = System.Console.CursorVisible;
-            System.Console.CursorVisible = false;
-
-            System.Console.CursorVisible = false;
-            System.Console.ForegroundColor = foreground;
-            System.Console.BackgroundColor = background;
-
             string line = new string(ch, rectangle.Width);
             for (int i = rectangle.Y; i < rectangle.Height; i++)
-            {
-                System.Console.SetCursorPosition(m_area.Left, m_area.Top+i);
-                System.Console.Write(line);
-       //         System.Console.WindowTop = 0;
-            }
-         //   System.Console.WindowTop = 0;
-            System.Console.CursorVisible = cursorvisibility;
+                for (int j = rectangle.X; j < rectangle.Width; j++)
+                    ConsoleCanvas.Instance[m_area.X + j, m_area.Y + i] = new ConsoleElement(ch, background, foreground);
         }
+
+        public void DrawRectangle(Rectangle rectangle, ConsoleColor foreground, ConsoleColor background)
+        {
+            
+            for (int i = rectangle.Y; i < rectangle.Height; i++)
+            {
+                for (int j = rectangle.X; j < rectangle.Width; j++)
+                {
+                    ConsoleCanvas.Instance[m_area.X + j, m_area.Y + i] = new ConsoleElement(ConsoleCanvas.Instance[m_area.X + j, m_area.Y + i].Character, background, foreground);
+                }
+            }
+        }
+
 
         public void DrawText(string text, Point location, ConsoleColor foreground, ConsoleColor background)
         {
-            bool cursorvisibility = System.Console.CursorVisible;
-            System.Console.CursorVisible = false;
-
             List<String> lines = new List<string>();
-
             int lineSize = m_area.Width;
-            
+
             while (text.Length > m_area.Width)
             {
-                lines.Add(text.Substring(0, lineSize));
+                lines.Add(text.Substring(0, lineSize - 1) + "$");
                 text = text.Substring(lineSize, text.Length - lineSize);
             }
             lines.Add(text);
 
-            System.Console.ForegroundColor = foreground;
-            System.Console.BackgroundColor = background;
-
             for (int i = 0; i < lines.Count; i++)
             {
-                System.Console.SetCursorPosition(location.X + m_area.Left, location.Y + m_area.Top + i);
-                System.Console.WriteLine(lines[i]);
+                for (int j = location.X; j < lines[i].Length; j++)
+                    ConsoleCanvas.Instance[m_area.X + j, m_area.Y + i + location.Y] = new ConsoleElement(lines[i][j], background, foreground);
             }
 
-            System.Console.CursorVisible = cursorvisibility;
         }
 
         public void DrawLine(char ch, Point p1, Point p2, ConsoleColor foreground, ConsoleColor background)
         {
-            bool cursorvisibility = System.Console.CursorVisible;
-            System.Console.CursorVisible = false;
-
-            System.Console.ForegroundColor = foreground;
-            System.Console.BackgroundColor = background;
-
             //TODO: support vertical or diagonal lines
             string line = new string(ch, p2.X - p1.X);
-            System.Console.SetCursorPosition(p1.X + m_area.Left, p1.Y + m_area.Top);
-            System.Console.Write(line);
 
-            System.Console.CursorVisible = cursorvisibility;
+            for (int i = p1.X; i < p2.X; i++)
+                ConsoleCanvas.Instance[m_area.X + i, m_area.Y + p1.Y] = new ConsoleElement(ch, background, foreground);
+
         }
+
+
 
     }
 }

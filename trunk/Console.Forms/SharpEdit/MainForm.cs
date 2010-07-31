@@ -6,7 +6,7 @@ using Crsouza.Console.Forms;
 
 namespace SharpEdit
 {
-    partial class MainForm : Form
+    partial class MainForm : Crsouza.Console.Forms.Form
     {
         public MainForm()
         {

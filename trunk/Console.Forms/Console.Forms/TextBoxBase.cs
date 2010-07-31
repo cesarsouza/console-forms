@@ -16,7 +16,11 @@ namespace Crsouza.Console.Forms
         private bool m_multiline;
         private bool m_readOnly;
         private int m_selectionLength;
-        private int m_selectionStart;
+
+        protected Point m_selectionStart;
+        protected Point m_selectStop;
+
+
         private bool m_wordWrap;
 
         private int m_showLineNumbers;
@@ -75,17 +79,42 @@ namespace Crsouza.Console.Forms
             if (line != m_currentLineIndex || col != m_currentLinePosition)
             {
                 bool changed = false;
+
+                if (line == LineCount)
+                    return;
+
+                if (col < 0)
+                {
+                    if (line == 0)
+                        return;
+
+                    // Column is negative
+                    line = line - 1;
+                    col = m_textLines[line].Length + col + 1;
+
+                }
+
+                if (col > m_textLines[line].Length)
+                {
+                    // Column is greater than line length
+                    col = col - m_textLines[line].Length - 1;
+                    line = line + 1;
+                }
+
+
+
                 if (line >= 0 && line < LineCount)
                 {
                     m_currentLineIndex = line;
                     changed = true;
                 }
 
-                if (col >= 0 && col < getCurrentLine().Length)
+                if (col >= 0 && line < LineCount && col <= m_textLines[line].Length)
                 {
                     m_currentLinePosition = col;
                     changed = true;
                 }
+
                 if (changed)
                 {
                     OnCaretPositionChanged(EventArgs.Empty);
@@ -108,68 +137,97 @@ namespace Crsouza.Console.Forms
             return new Point(m_currentLinePosition - m_firstVisiblePositionIndex,
                m_currentLineIndex - m_firstVisibleLineIndex);
         }
-/*
-        protected string[] getTextWindow(int startingLine, int startingCol, int maxWidth, int lineCount)
-        {
-            string[] lines = new string[lineCount];
-            for (int i = startingLine; i < lineCount; i++)
-            {
-                string line = lines[i] = m_textLines[i].ToString();
-                if (m_textLines[i].Length < maxWidth)
-                    lines[i] = line;
-                else lines[i] = line.Substring(0, maxWidth);
-            }
-            return lines;
-        }
-*/
+
         protected StringBuilder getCurrentLine()
         {
             return m_textLines[m_currentLineIndex];
         }
 
 
-
+        protected bool m_selecting;
         protected override void OnKeyPressed(ConsoleKeyPressEventArgs e)
         {
             base.OnKeyPressed(e);
 
             char ch = e.KeyInfo.KeyChar;
 
+            if (e.Shift)
+            {
+                if (!m_selecting)
+                {
+                    m_selecting = true;
+                    m_selectionStart = getCursorPosition();
+                    m_selectStop = getCursorPosition();
+                }
+                else
+                {
+                    m_selectStop = getCursorPosition();
+                    OnTextChanged(EventArgs.Empty);
+                }
+            }
+            else
+            {
+                if (m_selecting)
+                    m_selecting = false;
+            }
+
             switch (e.KeyInfo.Key)
             {
                 case ConsoleKey.UpArrow:
+                    if (m_currentLineIndex > 0 && m_currentLinePosition > m_textLines[m_currentLineIndex - 1].Length)
+                        m_currentLinePosition = m_textLines[m_currentLineIndex - 1].Length;
                     setCaretPosition(m_currentLineIndex - 1, m_currentLinePosition);
                     return;
-                    break;
 
                 case ConsoleKey.DownArrow:
-                    setCaretPosition(m_currentLineIndex + 1,m_currentLinePosition);
+                    if (m_currentLineIndex < LineCount && m_currentLinePosition > m_textLines[m_currentLineIndex + 1].Length)
+                        m_currentLinePosition = m_textLines[m_currentLineIndex + 1].Length;
+                    setCaretPosition(m_currentLineIndex + 1, m_currentLinePosition);
                     return;
-                    break;
 
                 case ConsoleKey.LeftArrow:
                     setCaretPosition(m_currentLineIndex, m_currentLinePosition - 1);
                     return;
-                    break;
 
                 case ConsoleKey.RightArrow:
                     setCaretPosition(m_currentLineIndex, m_currentLinePosition + 1);
                     return;
-                    break;
 
                 default:
                     break;
             }
+            if (e.KeyInfo.Key == ConsoleKey.Enter)
+            {
+                var currentLine = getCurrentLine();
+                string toend = currentLine.ToString().Substring(m_currentLinePosition);
+                currentLine.Remove(m_currentLinePosition, currentLine.Length - m_currentLinePosition);
+                m_textLines.Insert(m_currentLineIndex + 1, new StringBuilder(toend));
+                OnTextChanged(EventArgs.Empty);
+                setCaretPosition(m_currentLineIndex + 1, 0);
+                return;
+            }
 
-            if (e.KeyInfo.Key == ConsoleKey.Backspace)
+            else if (e.KeyInfo.Key == ConsoleKey.Backspace)
             {
                 if (m_currentLinePosition > 0)
                 {
                     getCurrentLine().Remove(m_currentLinePosition - 1, 1);
                     OnTextChanged(EventArgs.Empty);
                     setCaretPosition(m_currentLineIndex, m_currentLinePosition - 1);
-                    return;
                 }
+                else
+                {
+                    if (m_currentLineIndex == 0) return;
+
+                    // Copy the current line to the end of the previous line
+                    string sl = getCurrentLine().ToString();
+                    m_textLines[m_currentLineIndex - 1].Append(sl);
+                    m_textLines.RemoveAt(m_currentLineIndex);
+                    OnTextChanged(EventArgs.Empty);
+                    setCaretPosition(m_currentLineIndex - 1, m_textLines[m_currentLineIndex - 1].Length - sl.Length);
+
+                }
+                return;
             }
 
             else if (e.KeyInfo.Key == ConsoleKey.Delete)
@@ -179,9 +237,19 @@ namespace Crsouza.Console.Forms
                     getCurrentLine().Remove(m_currentLinePosition, 1);
                     OnTextChanged(EventArgs.Empty);
                     setCaretPosition(m_currentLineIndex, m_currentLinePosition);
-                    return;
                 }
+                else
+                {
+                    // Copy the next line to the end of this line
+                    string sl = m_textLines[m_currentLineIndex + 1].ToString();
+                    getCurrentLine().Append(sl);
+                    m_textLines.RemoveAt(m_currentLineIndex + 1);
+                    OnTextChanged(EventArgs.Empty);
+                    setCaretPosition(m_currentLineIndex, m_currentLinePosition);
+                }
+                return;
             }
+
             else if (char.IsLetterOrDigit(ch) || char.IsWhiteSpace(ch))
             {
                 getCurrentLine().Insert(m_currentLinePosition, e.KeyInfo.KeyChar);
