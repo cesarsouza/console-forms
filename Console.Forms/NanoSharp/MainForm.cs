@@ -20,16 +20,16 @@ namespace NanoSharp
 
             tbDocument.Text = 
                 "Lorem ipsum dolor sit amet, consectetuer\n" +
-                              "adipiscing elit, sed diam nonummy nibh euismod\n" +
-                              "tincidunt ut laoreet dolore magna aliquam erat\n"+
-                              "volutpat. Ut wisi enim ad minim veniam, quis nostrud\n"+
-                              "exerci tation ullamcorper suscipit lobortis nisl ut\n"+
-                              "aliquip ex ea commodo consequat. Duis autem vel eum\n" +
-                              "iriure dolor in hendrerit in vulputate velit esse\n"+
-                              "molestie consequat, vel illum dolore eu feugiat nulla\n"+
-                              "facilisis at vero eros et accumsan et iusto odio dignissim\n" +
-                              "qui blandit praesent luptatum zzril delenit augue duis\n" +
-                              "dolore te feugait nulla facilisi.";
+                "adipiscing elit, sed diam nonummy nibh euismod\n" +
+                "tincidunt ut laoreet dolore magna aliquam erat\n"+
+                "volutpat. Ut wisi enim ad minim veniam, quis nostrud\n"+
+                "exerci tation ullamcorper suscipit lobortis nisl ut\n"+
+                "aliquip ex ea commodo consequat. Duis autem vel eum\n" +
+                "iriure dolor in hendrerit in vulputate velit esse\n"+
+                "molestie consequat, vel illum dolore eu feugiat nulla\n"+
+                "facilisis at vero eros et accumsan et iusto odio dignissim\n" +
+                "qui blandit praesent luptatum zzril delenit augue duis\n" +
+                "dolore te feugait nulla facilisi.";
         }
 
         protected override void OnPreviewKeypress(ConsolePreviewKeyPressEventArgs e)

@@ -38,7 +38,7 @@ namespace NanoSharp
 
             lbAbout = new Label();
             lbAbout.Text = "This is a simple description text to test multiline labels (which currently looks horrible).";
-            lbAbout.Size = new System.Drawing.Size(Width-2, 2);
+            lbAbout.Size = new System.Drawing.Size(Width - 2, 2);
             lbAbout.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             lbAbout.BackColor = ConsoleColor.DarkGreen;
             lbAbout.ForeColor = ConsoleColor.Green;
@@ -62,7 +62,7 @@ namespace NanoSharp
             btnCancel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             btnCancel.BackColor = ConsoleColor.DarkRed;
             btnCancel.ForeColor = ConsoleColor.Red;
-            btnCancel.Location = new System.Drawing.Point(Width-btnCancel.Width-1, Height - 1);
+            btnCancel.Location = new System.Drawing.Point(Width - btnCancel.Width - 1, Height - 1);
             btnCancel.Click += new EventHandler(btnCancel_Click);
             btnCancel.TabIndex = 2;
 

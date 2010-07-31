@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Windows.Forms;
 
-#if !NO_WINFORMS_DEPENDENCY
-  using HorizontalAlignment = System.Windows.Forms.HorizontalAlignment;
-#endif
 
 
 namespace Crsouza.Console.Forms

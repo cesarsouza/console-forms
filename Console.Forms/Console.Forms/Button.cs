@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
-
-using DialogResult = System.Windows.Forms.DialogResult;
-using HorizontalAlignment = System.Windows.Forms.HorizontalAlignment;
+using System.Windows.Forms;
 
 namespace Crsouza.Console.Forms
 {

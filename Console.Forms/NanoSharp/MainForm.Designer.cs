@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Crsouza;
 using System.Collections.Generic;
 using System.Text;
 
 using Crsouza.Console.Forms;
+using System;
 
 namespace NanoSharp
 {
@@ -70,6 +71,9 @@ namespace NanoSharp
             this.Controls.Add(clExit);
             this.Controls.Add(lbStatus);
             this.ResumeLayout(true);
+
+            //this.Invalidate();
+            //this.Update();
         }
 
 

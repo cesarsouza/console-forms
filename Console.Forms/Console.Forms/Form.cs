@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
 
-#if !NO_WINFORMS_DEPENDENCY
-using DialogResult = System.Windows.Forms.DialogResult;
-using FormStartPosition = System.Windows.Forms.FormStartPosition;
-#endif
 
 
 namespace Crsouza.Console.Forms
@@ -89,7 +87,7 @@ namespace Crsouza.Console.Forms
                     break;
 
                 case FormStartPosition.CenterParent:
-                    this.Location = new System.Drawing.Point(Owner.Left + (Owner.Width - this.Width) / 2,
+                    this.Location = new Point(Owner.Left + (Owner.Width - this.Width) / 2,
                       Owner.Top + (Owner.Height - this.Height) / 2);
                     break;
 
