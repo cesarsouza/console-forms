@@ -44,6 +44,8 @@ namespace Crsouza.Console.Forms
 
          }
 
+         public bool Multiline {get; set;}
+
 
          /// <summary>
          ///   Gets or sets the alignment of text in the label.
@@ -81,7 +83,7 @@ namespace Crsouza.Console.Forms
                     goto case HorizontalAlignment.Left;
             }
 
-            e.Graphics.DrawText(Text, location, ForeColor, BackColor);
+            e.Graphics.DrawText(Text, location, ForeColor, BackColor, Multiline);
         }
     }
 }

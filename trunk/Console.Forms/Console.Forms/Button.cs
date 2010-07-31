@@ -75,7 +75,7 @@ namespace Crsouza.Console.Forms
 
         protected override void OnPaint(ConsolePaintEventArgs e)
         {
-            e.Graphics.DrawText(Text, new Point(0, 0), ForeColor, BackColor);
+            e.Graphics.DrawText(Text, new Point(0, 0), ForeColor, BackColor, false);
         }
     }
 }

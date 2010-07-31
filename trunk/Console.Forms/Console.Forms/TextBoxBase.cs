@@ -31,6 +31,8 @@ namespace Crsouza.Console.Forms
         protected int m_firstVisibleLineIndex;
         protected int m_firstVisiblePositionIndex;
 
+        protected int m_visibleLines = 19;
+
         protected List<StringBuilder> m_textLines;
 
 
@@ -80,8 +82,34 @@ namespace Crsouza.Console.Forms
             {
                 bool changed = false;
 
-                if (line == LineCount)
-                    return;
+                /*        if (line < 0)
+                            line = 0;
+                        if (line >= LineCount)
+                            return;
+                  */
+                if (line > m_visibleLines + m_firstVisibleLineIndex)
+                {
+                    m_firstVisibleLineIndex = m_firstVisibleLineIndex - (m_visibleLines - line);
+                    OnTextChanged(EventArgs.Empty);
+                    line = m_visibleLines;
+                    
+                }
+
+                else if (line < m_firstVisibleLineIndex)
+                {
+                    if (m_firstVisibleLineIndex == 0)
+                    {
+                        line = 0;
+                        return;
+                    }
+                    else
+                    {
+                        m_firstVisibleLineIndex = m_firstVisibleLineIndex + line;
+                        OnTextChanged(EventArgs.Empty);
+                        line = 0;
+                        //setCaretPosition(0, 0);
+                    }
+                }
 
                 if (col < 0)
                 {
@@ -94,13 +122,12 @@ namespace Crsouza.Console.Forms
 
                 }
 
-                if (col > m_textLines[line].Length)
+                if (line < m_textLines.Count && line >= 0 && col > m_textLines[line].Length)
                 {
                     // Column is greater than line length
                     col = col - m_textLines[line].Length - 1;
                     line = line + 1;
                 }
-
 
 
                 if (line >= 0 && line < LineCount)
@@ -109,7 +136,7 @@ namespace Crsouza.Console.Forms
                     changed = true;
                 }
 
-                if (col >= 0 && line < LineCount && col <= m_textLines[line].Length)
+                if (col >= 0 && line < LineCount && line > 0 && col <= m_textLines[line].Length)
                 {
                     m_currentLinePosition = col;
                     changed = true;
@@ -180,7 +207,7 @@ namespace Crsouza.Console.Forms
                     return;
 
                 case ConsoleKey.DownArrow:
-                    if (m_currentLineIndex < LineCount && m_currentLinePosition > m_textLines[m_currentLineIndex + 1].Length)
+                    if (m_currentLineIndex < LineCount - 1 && m_currentLinePosition > m_textLines[m_currentLineIndex + 1].Length)
                         m_currentLinePosition = m_textLines[m_currentLineIndex + 1].Length;
                     setCaretPosition(m_currentLineIndex + 1, m_currentLinePosition);
                     return;
@@ -191,6 +218,14 @@ namespace Crsouza.Console.Forms
 
                 case ConsoleKey.RightArrow:
                     setCaretPosition(m_currentLineIndex, m_currentLinePosition + 1);
+                    return;
+
+                case ConsoleKey.End:
+                    setCaretPosition(m_currentLineIndex, getCurrentLine().Length);
+                    return;
+
+                case ConsoleKey.Home:
+                    setCaretPosition(m_currentLineIndex, 0);
                     return;
 
                 default:
