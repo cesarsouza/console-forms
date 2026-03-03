@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Terminal.Forms</RootNamespace>
+    <AssemblyName>Terminal.Forms</AssemblyName>
+    <Description>A Windows Forms-like UI framework for console applications.</Description>
+    <PackageId>Terminal.Forms</PackageId>
+
+    <!--
+      Temporarily keep WinForms dependency as a stepping stone.
+      Phase 2 will replace System.Drawing and System.Windows.Forms types
+      with our own implementations, making this a pure console library.
+    -->
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+</Project>

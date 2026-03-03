@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>NanoSharp</RootNamespace>
+    <AssemblyName>NanoSharp</AssemblyName>
+    <Description>A nano-like text editor built with Terminal.Forms.</Description>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Terminal.Forms\Terminal.Forms.csproj" />
+  </ItemGroup>
+
+  <!-- Remove implicit System.Windows.Forms using to avoid ambiguity with Terminal.Forms types -->
+  <ItemGroup>
+    <Using Remove="System.Windows.Forms" />
+  </ItemGroup>
+
+</Project>

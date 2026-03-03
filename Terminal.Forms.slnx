@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/NanoSharp/NanoSharp.csproj" />
+    <Project Path="samples/SharpEdit/SharpEdit.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Terminal.Forms/Terminal.Forms.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Terminal.Forms.Tests/Terminal.Forms.Tests.csproj" />
+  </Folder>
+</Solution>

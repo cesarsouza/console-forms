@@ -1,0 +1,21 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+
+    <!-- Treat warnings as errors in CI, but allow local dev flexibility -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <!-- Package metadata defaults -->
+    <Authors>César de Souza</Authors>
+    <Company>Terminal.Forms</Company>
+    <Copyright>Copyright © César de Souza 2009-2026</Copyright>
+    <RepositoryUrl>https://github.com/cesarsouza/console-forms</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+</Project>
