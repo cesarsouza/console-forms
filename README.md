@@ -18,11 +18,11 @@ Like many side projects from that era, it was abandoned — not because the idea
 
 **Then AI happened.**
 
-In 2026, with tools like Claude available, something remarkable became possible: **going back in time to revisit the projects you gave up on and seeing what they could have been.** Not because the world needs another TUI framework — but because there's a unique joy in picking up where you left off, with a collaborator that never gets tired and can help you move at a pace that would have been unimaginable in 2009.
+In 2026, with tools like Claude available, something remarkable became possible: **going back in time to revisit abandoned projects and seeing what they could have been.** Not because the world needs another TUI framework — but because there's a unique joy in picking up where you left off, with a collaborator that never gets tired and can help you move at a pace that would have been unimaginable in 2009.
 
 This revival is a mix of:
-- **Nostalgia** — reconnecting with code you wrote 17 years ago, in a different era of .NET
-- **Empowerment** — AI doesn't just help you code faster, it lets you *dream bigger* about what's possible in a weekend
+- **Nostalgia** — reconnecting with code written 17 years ago, in a different era of .NET
+- **Empowerment** — AI doesn't just help write code faster, it lets you *dream bigger* about what's possible in a weekend
 - **Proof of concept** — demonstrating that AI-assisted development isn't just about productivity; it's about unlocking a completely new kind of creative fun
 - **Going back in time** — what if you could send a collaborator back to 2009 to help your past self finish what they started?
 
@@ -136,7 +136,7 @@ The project is in the **early revival phase**. See the [modernization roadmap](d
 
 ## Building
 
-> **Note**: The project currently targets .NET Framework 2.0 and requires Visual Studio or MSBuild with .NET Framework support. Modernization to .NET 9 SDK-style projects is the first planned milestone.
+> **Note**: The project targets .NET 10 (`net10.0-windows`). Build with `dotnet build Terminal.Forms.slnx`.
 
 ## License
 

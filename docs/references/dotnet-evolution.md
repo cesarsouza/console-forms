@@ -1,14 +1,14 @@
-# .NET Evolution: From .NET Framework 2.0 to .NET 9 (2005–2025)
+# .NET Evolution: From .NET Framework 2.0 to .NET 10 (2005–2026)
 
 > This guide is written for someone who last worked with C# around 2009–2013 and needs to understand what happened to the .NET ecosystem since then. It covers everything relevant to modernizing Terminal.Forms.
 
 ## TL;DR
 
-- **.NET Framework** (the one you knew) is now in **maintenance mode** — no new features, only security patches
+- **.NET Framework** is now in **maintenance mode** — no new features, only security patches
 - Microsoft created **.NET Core** (2016) as a cross-platform, open-source rewrite
 - In 2020, they dropped "Core" and unified everything as just **.NET 5**, then **.NET 6, 7, 8, 9...**
-- The current version is **.NET 9** (November 2024). **.NET 10** arrives November 2025.
-- C# has gone from **version 3.0** (which you used) to **version 13**, adding tons of features
+- The current version is **.NET 10** (November 2025).
+- C# has gone from **version 3.0** to **version 13**, adding tons of features
 - Project files (`.csproj`) are now simple and clean ("SDK-style")
 - NuGet is the universal package manager, built into everything
 - The build system is the `dotnet` CLI — no Visual Studio required
@@ -72,7 +72,7 @@
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Terminal.Forms</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -91,8 +91,8 @@ That's it. All `.cs` files are included automatically. No GUIDs, no boilerplate.
 - `System.Threading`
 - `System.ComponentModel`
 
-**Things that DON'T exist in .NET 9:**
-- `System.Windows.Forms` — **WinForms still exists** in .NET 9 but only for Windows desktop apps; it doesn't make sense as a dependency for a console UI library
+**Things that DON'T exist in modern .NET (or shouldn't be used):**
+- `System.Windows.Forms` — **WinForms still exists** in modern .NET but only for Windows desktop apps; it doesn't make sense as a dependency for a console UI library
 - `System.Drawing` — partially available via `System.Drawing.Common` NuGet package, but deprecated on non-Windows platforms
 
 **What this means for Terminal.Forms:** We need to replace the WinForms types we're using (`Size`, `Point`, `Rectangle`, `Padding`, `DialogResult`, `HorizontalAlignment`, `ScrollBars`, `Orientation`, `FormStartPosition`, `MessageBoxButtons`, `MessageBoxIcon`, `ScrollEventType`, `ScrollEventArgs`, `CancelEventArgs`). Most of these are trivial structs/enums we can define ourselves.

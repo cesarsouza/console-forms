@@ -1,6 +1,6 @@
 # Modernization Roadmap
 
-This document outlines the plan to bring Terminal.Forms from .NET Framework 2.0 (2009) to modern .NET 9+ (2026).
+This document outlines the plan to bring Terminal.Forms from .NET Framework 2.0 (2009) to modern .NET 10 (2026).
 
 > This project is being revived as a fun, AI-assisted experiment in picking up where we left off 17 years ago. The roadmap is ambitious on purpose — the whole point is to see how far we can go.
 

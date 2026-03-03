@@ -63,7 +63,7 @@ console-forms/                  # Repository root
 - **Dependencies to remove**: `System.Windows.Forms`, `System.Drawing`, `System.ComponentModel`
 - **Rendering**: Double-buffered via `ConsoleCanvas` singleton (hardcoded 80×25)
 - **Known bug**: `Control.ForeColor` getter returns `parent.BackColor` instead of `parent.ForeColor`
-- **Branches**: `master` (active), `legacy/original` (preserved 2009 code)
+- **Branches**: `main` (active), `legacy/original` (preserved 2009 code)
 
 ## Git Conventions
 
@@ -82,9 +82,9 @@ test: add unit tests for ControlCollection
 
 ### Branching
 
-- `master` — main development branch
+- `main` — main development branch
 - `legacy/original` — untouched 2009 code (never modify)
-- Feature work: `phase-1/port-to-dotnet9`, `phase-2/remove-winforms`, etc.
+- Feature work: `phase-2/remove-winforms`, `phase-3/modern-csharp`, etc.
 
 ## Code Style
 
